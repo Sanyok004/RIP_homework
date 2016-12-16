@@ -9,8 +9,8 @@ class RegistrationForm(forms.Form):
     password = forms.CharField(min_length=8, widget=forms.PasswordInput, label='Пароль')
     password2 = forms.CharField(min_length=8, widget=forms.PasswordInput, label='Повторите ввод')
     email = forms.EmailField(label='Email')
-    first_name = forms.CharField(max_length=30, label='Введите имя')
-    last_name = forms.CharField(max_length=30, label='Введите фамилию')
+    first_name = forms.CharField(max_length=30, label='Имя')
+    last_name = forms.CharField(max_length=30, label='Фамилия')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -37,7 +37,7 @@ class RegistrationForm(forms.Form):
         user.is_active = True
         user.is_superuser = False
         user.save()
-        return authenticate(username=user.username, password=user.password)
+        return authenticate(username=user.username, password=data.get('password'))
 
 
 class AuthForm(forms.Form):
@@ -51,6 +51,6 @@ class AuthForm(forms.Form):
             if user.is_active:
                 data['user'] = user
             else:
-                raise forms.ValidationError('Пользователь неактивен')
+                raise forms.ValidationError('Пользователь не активен')
         else:
             raise forms.ValidationError('Неверный логин или пароль')

@@ -19,6 +19,8 @@ from Bets import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.authorization, name='main'),
+    url(r'^$', views.main, name='main'),
+    url(r'^auth/', views.authorization, name='auth'),
     url(r'^registration/', views.registration, name='registration'),
+    url(r'^logout/', views.logout_view, name='logout')
 ]
