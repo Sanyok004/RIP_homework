@@ -13,8 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 from Bets import views
 
 urlpatterns = [
@@ -22,5 +26,13 @@ urlpatterns = [
     url(r'^$', views.main, name='main'),
     url(r'^auth/', views.authorization, name='auth'),
     url(r'^registration/', views.registration, name='registration'),
-    url(r'^logout/', views.logout_view, name='logout')
+    url(r'^logout/', views.logout_view, name='logout'),
+    url(r'^teams/', views.TeamsView.as_view(), name='teams'),
+    url(r'^team/(?P<id>\d+)', views.TeamView.as_view(), name='team'),
+    url(r'^add_team/', views.add_team, name='add_team'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns() + static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

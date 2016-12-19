@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ team.name }}{% endblock %}
+
+{% block navbar %}
+    <div class="btn_navbar">
+        <span class="navbar_name">{{ user }}</span>
+        <button type="button" class="btn btn-primary"><a href="{% url 'logout' %}">Выйти</a></button>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="team">
+        <img class="logo-lg" src="{{ MEDIA_URL }}{{ team.logo.url }}">
+        <p class="title">{{ team.name }}</p>
+        <p><span class="fields">Вид спорта:</span> {{ team.sport }}</p>
+        <p><span class="fields">Страна:</span> {{ team.country }}</p>
+        <p><span class="fields">Тренер:</span> {{ team.coach }}</p>
+        <p><span class="fields">Количество сыгранных матчей:</span> {{ team.games }}</p>
+        <p><span class="fields">Количество побед:</span> {{ team.win }}</p>
+        <p><span class="fields">Описание:</span> {{ team.description }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+.btn a {
+    text-decoration: none;
+    color: white;
+}
+
+form p {
+    float: right;
+}
+
+.auth_form {
+    width: 400px;
+    margin: 100px auto 0;
+    padding-bottom: 30px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.auth_form form{
+    width: 240px;
+    margin: 0 auto;
+}
+
+.auth_form h2, .registration_form h2{
+    text-align: center;
+}
+
+.auth_form form .btn-submit{
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.registration_form {
+    width: 450px;
+    margin: 50px auto 0;
+    padding-bottom: 30px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.registration_form form{
+    width: 300px;
+    margin: 0 auto;
+}
+
+.registration_form .btn-submit{
+    margin-left: 75px;
+}
+
+.btn_navbar {
+    float: right;
+    margin-top: 7px;
+}
+
+.navbar_name {
+    color: white;
+}
+
+.logo {
+    height: 40px;
+    width: 60px;
+    margin-right: 5px;
+}
+
+.logo-lg {
+    height: 200px;
+    width: 300px;
+    float: left;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.fields {
+    font-style: italic;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+.modal-body form {
+    width: 400px;
+    margin: 0 auto;
+    text-align: right;
+}
+
+.modal-body form label{
+    display: block;
+}
+
+.modal-body form button {
+
+}
+
+.btn-close {
+    margin-right: 100px;
+    margin-left: 10px;
+}
+
+input[type="file"] {
+    display: inline-block;
+}
+
+.text-error {
+    display: block;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.btn-add-team {
+    position: fixed;
+    right: 20px;
+    bottom: 60px;
+}

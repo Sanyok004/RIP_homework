@@ -1,9 +1,73 @@
 {% extends 'base.html' %}
 
-{% block title %}Команды{% endblock %}
+{% block title %}Список команд{% endblock %}
 
-{% block header %}<h2>Список команд</h2>{% endblock %}
+{% block navbar %}
+    <div class="btn_navbar">
+        <span class="navbar_name">{{ user }}</span>
+        <button type="button" class="btn btn-primary"><a href="{% url 'logout' %}">Выйти</a></button>
+    </div>
+{% endblock %}
+
+{% block header %}<!--<h2>Список команд:</h2>-->{% endblock %}
 
 {% block body %}
+    {% for team in teams %}
+        <h4><img class="logo" src="{{ MEDIA_URL }}{{ team.logo.url }}"><a href="{% url 'team' team.id %}">{{ team.name }}</a></h4>
+        <p>{{ team.description }}</p>
+        <hr>
+    {% endfor %}
+    <button type="button" class="btn btn-primary btn-add-team btn-lg" data-toggle="modal" data-target="#modal1">Добавить команду</button>
+{% endblock %}
 
+{% block modal %}
+    <div class="modal fade" id="modal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Добавление команды</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="add_team" method="POST" enctype="multipart/form-data" action="{% url 'add_team' %}">
+                        {% csrf_token %}
+                        <label class="team-name">
+                            Название команды:
+                            <input type="text" name="name" id="name">
+                        </label>
+                        <label class="team-sport">
+                            Вид спорта:
+                            <input type="text" name="sport" id="sport">
+                        </label>
+                        <label class="team-country">
+                            Страна:
+                            <input type="text" name="country" id="country">
+                        </label>
+                        <label class="team-coach">
+                            Тренер:
+                            <input type="text" name="coach" id="coach">
+                        </label>
+                        <label class="team-games">
+                            Количество сыгранных игр:
+                            <input type="text" name="games" id="games">
+                        </label>
+                        <label class="team-win">
+                            Количество побед:
+                            <input type="text" name="win" id="win">
+                        </label>
+                        <label class="team-description">
+                            Описание:
+                            <input type="text" name="description" id="description">
+                        </label>
+                        <label class="team-logo">
+                            Логотип:
+                            <input type="file" name="logo" id="logo">
+                        </label>
+                        <br>
+                        <button class="btn btn-primary btn-save" type="submit">Сохранить</button>
+                        <button class="btn btn-primary btn-close" type="button" data-dismiss="modal">Отмена</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
