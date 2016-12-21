@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -13,6 +14,7 @@ class Team(models.Model):
     win = models.IntegerField(default=0)
     games = models.IntegerField(default=0)
     logo = models.ImageField(upload_to='images/')
+    user_bet = models.ManyToManyField(User, through='Bet', related_name='users')
 
 
 class TeamAdmin(admin.ModelAdmin):
@@ -22,3 +24,15 @@ class TeamAdmin(admin.ModelAdmin):
     @staticmethod
     def percent_win(obj):
         return '{0:.1%}'.format(obj.win/obj.games)
+
+
+class Bet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    ratio = models.FloatField(default=1)
+    amount = models.IntegerField(default=0)
+    date = models.DateField(auto_now=True)
+
+
+class BetAdmin(admin.ModelAdmin):
+    list_display = ('user', 'team', 'ratio', 'amount', 'date')

@@ -12,11 +12,13 @@
 {% block header %}<!--<h2>Список команд:</h2>-->{% endblock %}
 
 {% block body %}
-    {% for team in teams %}
-        <h4><img class="logo" src="{{ MEDIA_URL }}{{ team.logo.url }}"><a href="{% url 'team' team.id %}">{{ team.name }}</a></h4>
-        <p>{{ team.description }}</p>
-        <hr>
-    {% endfor %}
+    <div class="teams_list">
+        {% for team in teams %}
+            <h4><img class="logo" src="{{ MEDIA_URL }}{{ team.logo.url }}"><a href="{% url 'team' team.id %}">{{ team.name }}</a></h4>
+            <p>{{ team.description }}</p>
+            <hr>
+        {% endfor %}
+    </div>
     <button type="button" class="btn btn-primary btn-add-team btn-lg" data-toggle="modal" data-target="#modal1">Добавить команду</button>
 {% endblock %}
 

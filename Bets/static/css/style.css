@@ -115,3 +115,45 @@ input[type="file"] {
     right: 20px;
     bottom: 60px;
 }
+
+.list_users {
+    margin-left: 20px;
+}
+
+.user-bet {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.users {
+    margin-top: 20px;
+}
+
+.bet {
+    width: 450px;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    margin: 50px 0;
+}
+
+.form_bet p{
+    display: inline-block;
+    float: none;
+}
+
+.form_bet {
+    width: 285px;
+    text-align: right;
+    margin: 0 auto;
+
+}
+
+.bet-title {
+    font-weight: bold;
+}
+
+.team_id {
+    display: none;
+}

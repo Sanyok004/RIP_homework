@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block body %}
+    <p class="team_id">{{ team.id }}</p>
     <div class="team">
         <img class="logo-lg" src="{{ MEDIA_URL }}{{ team.logo.url }}">
         <p class="title">{{ team.name }}</p>
@@ -19,5 +20,19 @@
         <p><span class="fields">Количество сыгранных матчей:</span> {{ team.games }}</p>
         <p><span class="fields">Количество побед:</span> {{ team.win }}</p>
         <p><span class="fields">Описание:</span> {{ team.description }}</p>
+    </div>
+    <div class="bet">
+        <h4 class="bet-title">Сделать ставку</h4>
+        <form class="form_bet" method="POST" action="{% url 'make_bet' team.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-ajax-form">Сделать ставку</button>
+        </form>
+    </div>
+    <div class="users">
+        <h5 class="user-bet">Список пользователей, сделавших ставку:</h5>
+        {% for user in users %}
+            <p class="list_users">{{ user.username }}</p>
+        {% endfor %}
     </div>
 {% endblock %}

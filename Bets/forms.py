@@ -54,3 +54,8 @@ class AuthForm(forms.Form):
                 raise forms.ValidationError('Пользователь не активен')
         else:
             raise forms.ValidationError('Неверный логин или пароль')
+
+
+class BetForm(forms.Form):
+    ratio = forms.FloatField(label='Коэффициент')
+    amount = forms.IntegerField(label='Сумма ставки')

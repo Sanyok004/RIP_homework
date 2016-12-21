@@ -1,13 +1,17 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.files import File
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
-from Bets.forms import AuthForm, RegistrationForm
-from Bets.models import Team
+from Bets.forms import AuthForm, RegistrationForm, BetForm
+from Bets.models import Team, Bet
 
 
 @login_required(login_url='/auth/')
@@ -48,14 +52,22 @@ def logout_view(request):
 
 class TeamsView(View):
     def get(self, request):
-        teams = Team.objects.all()
+        teams = Team.objects.all()[:7]
         return render(request, 'teams.html', {'teams': teams, 'user': request.user.get_full_name()})
 
 
 class TeamView(View):
     def get(self, request, id):
         team = Team.objects.filter(id__exact=id)[0]
-        return render(request, 'team.html', {'team': team, 'user': request.user.get_full_name()})
+        users = team.user_bet.all()
+        form = BetForm()
+        dictionary = {
+            'team': team,
+            'user': request.user.get_full_name(),
+            'users': users,
+            'form': form,
+        }
+        return render(request, 'team.html', dictionary)
 
 
 def add_team(request):
@@ -73,3 +85,36 @@ def add_team(request):
         return HttpResponseRedirect('/team/{0}'.format(team.id))
     return HttpResponseRedirect('/')
 
+
+class MakeBet(View):
+    def post(self, request, id):
+        if request.is_ajax():
+            form = BetForm(request.POST)
+            team = Team.objects.filter(id__exact=id)[0]
+            if form.is_valid():
+                data = form.cleaned_data
+                bet = Bet()
+                bet.user = request.user
+                bet.team = team
+                bet.ratio = data.get('ratio')
+                bet.amount = data.get('amount')
+                bet.save()
+            user = request.user.username
+            return HttpResponse(json.dumps({'message': user}))
+
+
+class AddContent(View):
+    def post(self, request):
+        if request.is_ajax():
+            last_team_id = int(request.POST.get('last_team_id'))
+            teams = Team.objects.all()
+            if last_team_id == teams.count():
+                return HttpResponse(json.dumps({'message': 'stop'}))
+            team = teams[last_team_id:last_team_id+1][0]
+            data = {
+                'team_id': team.id,
+                'team_logo': team.logo.url,
+                'team_name': team.name,
+                'team_description': team.description
+            }
+            return HttpResponse(json.dumps({'message': data}))

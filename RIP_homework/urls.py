@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^teams/', views.TeamsView.as_view(), name='teams'),
     url(r'^team/(?P<id>\d+)', views.TeamView.as_view(), name='team'),
     url(r'^add_team/', views.add_team, name='add_team'),
+    url(r'^make_bet/(?P<id>\d+)', views.MakeBet.as_view(), name='make_bet'),
+    url(r'^add_content', views.AddContent.as_view(), name='add_content'),
 ]
 
 if settings.DEBUG:
