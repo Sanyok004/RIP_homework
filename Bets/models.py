@@ -17,9 +17,27 @@ class Team(models.Model):
     user_bet = models.ManyToManyField(User, through='Bet', related_name='users')
 
 
+class SportFilter(admin.SimpleListFilter):
+    title = 'Sport'
+    parameter_name = 'sport'
+
+    def lookups(self, request, model_admin):
+        return [
+            ('Football', 'Футбольные клубы'),
+            ('Hockey', 'Хоккейные клубы')
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() == 'Football':
+            return queryset.filter(sport='Футбол')
+        elif self.value() == 'Hockey':
+            return queryset.filter(sport='Хоккей')
+
+
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'games', 'win', 'percent_win')
     search_fields = ['name']
+    list_filter = (SportFilter,)
 
     @staticmethod
     def percent_win(obj):
